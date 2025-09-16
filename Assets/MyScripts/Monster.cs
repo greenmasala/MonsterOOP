@@ -1,27 +1,7 @@
 using UnityEngine;
 
-public class Monster : MonoBehaviour
+public class Monster : Character
 {
-    //Attributes
-    public string Name; //capitalization to signify that this is public
-    private int hp;
-    public int HP
-    {
-        get {return hp;}
-        set {if (value <= 0) hp = 0;
-            else hp = value;}
-
-        /*get {return hp;}
-        set {hp = value;}*/  //default
-    }
-
-    private int monDmg;
-    public int MonDmg
-    {
-        get => monDmg;
-        set => monDmg = value;
-    }
-
     bool defeated;
 
     private int lootGold;
@@ -32,28 +12,21 @@ public class Monster : MonoBehaviour
     }
 
     //Constructor to create an object
-    public Monster(string newName, int newHp, int gold, int monDmg) //assigning values to attributes above
+    public void Init(string newName, int newHp, int gold, int monDmg) //assigning values to attributes above
     {
-        Name = newName;
-        HP = newHp;
+        base.Init(newName, newHp, monDmg);
         defeated = false;
         LootGold = gold;
-        MonDmg = monDmg;
     }
 
-    public void TakeDamage(int dmg)
+   public int dropReward()
     {
-        HP -= dmg;
-        Debug.Log($"{Name} took {dmg} dmg!! Current HP: {HP}");
+        return LootGold;
     }
 
-    public void Attack(Hero hero) //getting EVERYTHING from Hero.cs. Pretty cool!
+    public override void ShowStat()
     {
-        hero.TakeDamage(MonDmg);
-    }
-
-    public bool IsAlive()
-    {
-        return (HP > 0); //if the cond is true, IsAlive will return true
+        base.ShowStat();
+        Debug.Log($"Monster Bounty: {LootGold}");
     }
 }

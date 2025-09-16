@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3884314812862762026, guid: 32c7de7e32d985043ab823d6b10f4426, type: 3}
       propertyPath: m_Name
-      value: Monster
+      value: Giant
       objectReference: {fileID: 0}
     - target: {fileID: 5406828211476451217, guid: 32c7de7e32d985043ab823d6b10f4426, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -4.26
       objectReference: {fileID: 0}
     - target: {fileID: 5406828211476451217, guid: 32c7de7e32d985043ab823d6b10f4426, type: 3}
       propertyPath: m_LocalPosition.y

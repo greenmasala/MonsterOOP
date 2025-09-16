@@ -1,31 +1,8 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Hero : MonoBehaviour
+public class Hero : Character //change to monobehavior to inherit from abstract script character!
 {
-    //Attributes
-    private string name; //capitalization to signify that this is public, not necessary but a good practice!
-    public string Name
-    {
-        get => name;
-        set => name = string.IsNullOrEmpty(value) ? "Unknown" : value; //if name is blank, then set name to "Unknown"
-    }
-
-    //Properties, private component that can be changed by other scripts depending on the conditions set
-    private int hp;
-    public int HP
-    {
-        get => hp; 
-        set => hp = (value <= 0) ? 0 : value; //alternative way for if else, ternary method
-
-        /*get {return hp;}
-        set 
-        {
-            if (value <= 0) hp = 0;
-            else hp = value;
-        }*/
-    }
-
     private int gold;
     public int Gold
     {
@@ -41,26 +18,18 @@ public class Hero : MonoBehaviour
         }*/
     }
 
-    private int playerDmg;
-    public int PlayerDmg
-    {
-        get => playerDmg;
-        set => playerDmg = (value <= 0) ? 0 : value;
-    }
-
     //Constructor to create an object
     //Initialization: Unity doesn't use constructor, we initialize it instead BASICALLY TURNING THE CONSTRUCTOR INTO A METHOD
-    public void Init(string newName, int newHp, int playerDmg) //assigning values to attributes above
+    /*public void Init(string newName, int newHp, int playerDmg) //assigning values to attributes above
     {
-        Name = newName;
-        HP = newHp;
-        Gold = 0;
-        PlayerDmg = playerDmg;
-    }
+        base.Init(newName, newHp, playerDmg); //method overlaoding, call for base info from character.cs
+        Gold = 0; //then add your own variable
+    }*/
 
-    public bool IsAlive()
+    public override void Init(string newName, int newHp, int dmg) //override = same name, same parameter but different assigned value
     {
-        return (HP > 0); //if the cond is true, IsAlive will return true
+        base.Init(newName, newHp, dmg);
+        Gold = 0;
     }
 
     public void EarnGold(int lootGold) //getting gold from monster (GET IN MAIN)
@@ -69,18 +38,9 @@ public class Hero : MonoBehaviour
         Debug.Log($"got {Gold} gold");
     }
 
-    public void TakeDamage(int dmg)
+    public override void ShowStat()
     {
-        HP -= dmg;
-        Debug.Log($"{Name} took {dmg} dmg!! Current HP: {HP}");
-    }
-    public void Attack(Monster monster) //getting EVERYTHING from Monster.cs. Pretty cool!
-    {
-        monster.TakeDamage(PlayerDmg);
-    }
-
-    public void ShowStat()
-    {
-        Debug.Log($"Hero name: {Name} HP: {HP} Gold: {Gold} Condition: {IsAlive()} Attack Power: {PlayerDmg} ");
+        base.ShowStat();
+        Debug.Log($"Player Gold: {Gold}");
     }
 }
