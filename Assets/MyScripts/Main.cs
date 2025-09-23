@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour  //monobehaviour is the biggest in terms of script heirarchy
@@ -15,9 +16,10 @@ public class GameManager : MonoBehaviour  //monobehaviour is the biggest in term
         hero1.Init("ithiban kathuga", 50, 10);
         hero1.ShowStat();
 
-        SpawnMonster("kazuma kiryu", 50, 5, 10, 0);
-        SpawnMonster("test1", 500, 2, 1, 1);
-        SpawnMonster("itworks", 20, 1, 7, 2);
+        SpawnMonster(MonsterType.Dragon);
+        SpawnMonster(MonsterType.Giant);
+        SpawnMonster(MonsterType.Orc);
+
         /*currentMonster = Instantiate(monsterPrefabs[0]);
         currentMonster.Init("kazuma kiryu", 50, 5, 10);
         monsters.Add(currentMonster);
@@ -33,6 +35,19 @@ public class GameManager : MonoBehaviour  //monobehaviour is the biggest in term
             monster.ShowStat();
         }
 
+        currentMonster = monsters[0];
+        hero1.Attack(currentMonster);
+        currentMonster.ShowStat();
+        hero1.ShowStat();
+        currentMonster.Attack(hero1, 10);
+        currentMonster.ShowStat();
+        hero1.ShowStat();
+
+        Debug.Log($"{currentMonster.Name} is defeated!");
+        hero1.EarnGold(currentMonster.LootGold);
+        hero1.Heal(25);
+        hero1.ShowStat();
+
         /*hero.HP = 100;
         hero.ShowStat();
         Debug.Log($"Monster name: {monster1.Name} HP: {monster1.HP}");
@@ -46,10 +61,15 @@ public class GameManager : MonoBehaviour  //monobehaviour is the biggest in term
         hero.ShowStat();*/
     }
 
-    void SpawnMonster(string monster, int hp, int gold, int dmg, int index)
+    public void SpawnMonster(MonsterType monType)
     {
-        currentMonster = Instantiate(monsterPrefabs[index]);
+        Monster monsterPrefab = monsterPrefabs[(int)monType]; //convert MonsterType (enum value) to index value for list
+        Monster monsterObject = Instantiate(monsterPrefab); //spawn obj in scene
+        monsterObject.Init(monType); //get value from init depending on monType (the switch case)
+        monsters.Add(monsterObject); //add spawned obj to list
+
+        /*currentMonster = Instantiate(monsterPrefabs);
         currentMonster.Init(monster, hp, gold, dmg);
-        monsters.Add(currentMonster);
+        monsters.Add(currentMonster);*/
     }
 }

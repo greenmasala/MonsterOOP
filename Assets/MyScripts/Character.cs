@@ -6,34 +6,37 @@ public abstract class Character : MonoBehaviour //abstract = cant clone/create o
     public string Name
     {
         get => name;
-        set => name = string.IsNullOrEmpty(value) ? "Unknown" : value; //if name is blank, then set name to "Unknown"
+        private set => name = string.IsNullOrEmpty(value) ? "Unknown" : value; //if name is blank, then set name to "Unknown"
     }
 
+    protected int maxHP = 100; //protected = private but accessible to all scripts inherting from this abstract script
+   
+    public int HP {  get; protected set; }
     //Properties, private component that can be changed by other scripts depending on the conditions set
-    private int hp;
+    /*private int hp;
     public int HP
     {
         get => hp;
-        set => hp = (value <= 0) ? 0 : value; //alternative way for if else, ternary method
+        private set => hp = (value <= 0) ? 0 : value; //alternative way for if else, ternary method
 
         /*get {return hp;}
         set 
         {
             if (value <= 0) hp = 0;
             else hp = value;
-        }*/
-    }
+        }
+    }*/
 
     private int dmg;
     public int Damage
     {
         get => dmg;
-        set => dmg = (value <= 0) ? 0 : value;
+        private set => dmg = (value <= 0) ? 0 : value;
     }
 
     //Constructor to create an object
     //Initialization: Unity doesn't use constructor, we initialize it instead BASICALLY TURNING THE CONSTRUCTOR INTO A METHOD
-    public virtual void Init(string newName, int newHp, int dmg) //virtual = when inhertied, values can be changed
+    public void Init(string newName, int newHp, int dmg) //virtual = when inhertied, values can be changed
     {
         Name = newName;
         HP = newHp;
@@ -47,13 +50,22 @@ public abstract class Character : MonoBehaviour //abstract = cant clone/create o
 
     public void TakeDamage(int dmg)
     {
-        HP -= dmg;
+        //HP -= dmg;
+        HP = Mathf.Clamp(HP - dmg, 0, maxHP); //basically the same as the if else below, aswell as getting damaged! tho itll only apply the clamp if this method is used.
+        /*if (HP < 0) HP = 0;
+        else if (HP > maxHP) HP = maxHP;*/
         Debug.Log($"{Name} took {dmg} dmg!! Current HP: {HP}");
     }
-    public void Attack(Monster monster) //getting EVERYTHING from Monster.cs. Pretty cool!
+
+    /*public virtual void Attack(Character target) //getting EVERYTHING from Character to be able to get both Hero and Monster Class. Pretty cool!
     {
-        monster.TakeDamage(Damage);
-    }
+        target.TakeDamage(Damage);
+    }*/
+
+    public abstract void Attack(Character target); //Abstract method = child will have to write this method themselves
+    public abstract void Attack(Character target, int bonusDmg);
+
+    public abstract void OnDefeated();
 
     public virtual void ShowStat()
     {
