@@ -1,17 +1,20 @@
 using UnityEngine;
 
-public enum MonsterType
+/*public enum MonsterType
 {
     Dragon, //value = 0
     Giant,
     Orc
-}
+}*/
 
-public class Monster : Character
+public abstract class Monster : Character
 {
-    bool defeated;
+    private bool defeated;
 
-    private int lootGold;
+    //Abstract property
+    public abstract int LootGold { get; } // READ ONLY PROPERTY = no set to allow other scripts to be able to GET the value but not be able to SET the value
+
+    /*private int lootGold;
     public int LootGold
     {
         get => lootGold;
@@ -19,7 +22,7 @@ public class Monster : Character
     }
 
     //Constructor to create an object
-    public void Init(MonsterType monType) //assigning values to attributes above
+    /*public void Init(MonsterType monType) //assigning values to attributes above
     {
         switch (monType)
         {
@@ -39,7 +42,7 @@ public class Monster : Character
         defeated = false;
     }
 
-    /*public override void Attack(Character target)
+    public override void Attack(Character target)
     {
         Debug.Log($"{Name} attacked {target.Name} by punching them!");
         base.Attack(target);
@@ -48,8 +51,6 @@ public class Monster : Character
     public override void Attack(Character target)
     {
         target.TakeDamage(Damage);
-        Debug.Log($"{Name} attacked {target.Name} by punching them! Damage: {Damage}");
-        /*base.Attack(target);*/
     }
 
     public override void Attack(Character target, int bonusDmg)
@@ -64,13 +65,16 @@ public class Monster : Character
         return LootGold;
     }
 
+    public abstract void Roar();
+
     public override void ShowStat()
     {
         base.ShowStat();
         Debug.Log($"Monster Bounty: {LootGold}");
     }
-    public override void OnDefeated()
+
+   /* public override void OnDefeated()
     {
         throw new System.NotImplementedException();
-    }
+    }*/
 }

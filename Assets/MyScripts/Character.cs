@@ -12,6 +12,9 @@ public abstract class Character : MonoBehaviour //abstract = cant clone/create o
     protected int maxHP = 100; //protected = private but accessible to all scripts inherting from this abstract script
    
     public int HP {  get; protected set; }
+
+    public Weapon EquippedWeapon { get; private set; }
+
     //Properties, private component that can be changed by other scripts depending on the conditions set
     /*private int hp;
     public int HP
@@ -65,7 +68,23 @@ public abstract class Character : MonoBehaviour //abstract = cant clone/create o
     public abstract void Attack(Character target); //Abstract method = child will have to write this method themselves
     public abstract void Attack(Character target, int bonusDmg);
 
+    //overload
+    public virtual void Attack(Character target, Weapon weapon)
+    {
+        if (weapon != null)
+        {
+            int damage = dmg + weapon.BonusDMG;
+            target.TakeDamage(damage);
+            Debug.Log($"{Name} used a {weapon.WeaponName}, gaining a bonus {weapon.BonusDMG} damage! Total damage: {damage}");
+        }
+    }
+
     public abstract void OnDefeated();
+
+    public void EquipWeapon(Weapon weapon)
+    {
+        EquippedWeapon = weapon;
+    }
 
     public virtual void ShowStat()
     {

@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour  //monobehaviour is the biggest in term
     public Hero hero1; //set constructor to PUBLIC to allow access to constructor from Main
     public List<Monster> monsterPrefabs; //made to duplicate and create variables
     public List<Monster> monsters = new List<Monster>(); //variables from before that will be spawned in scene
-    public Monster currentMonster;
+    public List<Weapon> weaponPrefabs;
+    //public Monster currentMonster;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,7 +17,50 @@ public class GameManager : MonoBehaviour  //monobehaviour is the biggest in term
         hero1.Init("ithiban kathuga", 50, 10);
         hero1.ShowStat();
 
-        SpawnMonster(MonsterType.Dragon);
+        //overload instantiate
+        Weapon sword = Instantiate(weaponPrefabs[0], new Vector3(0, 0, 0), Quaternion.identity);
+        Weapon bat = Instantiate(weaponPrefabs[1], new Vector3(3, 3, 3), Quaternion.identity);//identity in Quaternion = no change in rotation
+
+        //init weapon
+        sword.InitWeapon("Flaming Hot Sword", 10);
+        bat.InitWeapon("Hero's Bat", 20);
+
+        //equip weapon
+       
+      
+
+        //spawn monster from prefab
+        Monster dragonObj = Instantiate(monsterPrefabs[2]);
+        Dragon dragon1 = dragonObj.GetComponent<Dragon>(); //literally getting the components from the script Dragon
+        if (dragon1 != null ) //if it doesnt have a script = null
+        {
+            dragon1.InitDragon("kazuma kiryu");
+        }
+        monsters.Add(dragonObj);//add to monsters list
+
+        Monster goblinObj = Instantiate(monsterPrefabs[0]);
+        Goblin goblin1 = goblinObj.GetComponent<Goblin>();
+        if (goblin1 != null )
+        {
+            goblin1.InitGoblin("tsuneo iwami");
+        }
+        monsters.Add(goblinObj);
+
+        Monster orcObj = Instantiate(monsterPrefabs[1]);
+        Orc orc1 = orcObj.GetComponent<Orc>();
+        if (orc1 != null )
+        {
+            orc1.InitOrc("taiga saejima");
+        }
+        monsters.Add(orcObj);
+
+        hero1.EquipWeapon(bat);
+        monsters[1].EquipWeapon(sword);
+
+        hero1.Attack(monsters[1], hero1.EquippedWeapon);
+        monsters[1].Attack(hero1, monsters[1].EquippedWeapon);
+
+        /*SpawnMonster(MonsterType.Dragon);
         SpawnMonster(MonsterType.Giant);
         SpawnMonster(MonsterType.Orc);
 
@@ -33,9 +77,11 @@ public class GameManager : MonoBehaviour  //monobehaviour is the biggest in term
         foreach (Monster monster in monsters)
         {
             monster.ShowStat();
+            monster.Roar();
+            monster.Attack(hero1);
         }
 
-        currentMonster = monsters[0];
+        /*currentMonster = monsters[0];
         hero1.Attack(currentMonster);
         currentMonster.ShowStat();
         hero1.ShowStat();
@@ -61,7 +107,7 @@ public class GameManager : MonoBehaviour  //monobehaviour is the biggest in term
         hero.ShowStat();*/
     }
 
-    public void SpawnMonster(MonsterType monType)
+    /*public void SpawnMonster(MonsterType monType)
     {
         Monster monsterPrefab = monsterPrefabs[(int)monType]; //convert MonsterType (enum value) to index value for list
         Monster monsterObject = Instantiate(monsterPrefab); //spawn obj in scene
@@ -70,6 +116,6 @@ public class GameManager : MonoBehaviour  //monobehaviour is the biggest in term
 
         /*currentMonster = Instantiate(monsterPrefabs);
         currentMonster.Init(monster, hp, gold, dmg);
-        monsters.Add(currentMonster);*/
-    }
+        monsters.Add(currentMonster);
+    }*/
 }

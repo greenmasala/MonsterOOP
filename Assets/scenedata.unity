@@ -339,11 +339,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   hero1: {fileID: 2070548463}
   monsterPrefabs:
-  - {fileID: 2913795919276688475, guid: 37a70b9f33756af429ad4378e876c4db, type: 3}
-  - {fileID: 7184766299817798239, guid: 48f83cf70271f664d997a86987ac07fa, type: 3}
-  - {fileID: 8684093923500294023, guid: 66fece471a78a484fa68b22ffc70c5ae, type: 3}
+  - {fileID: 3707078867712689703, guid: 48f83cf70271f664d997a86987ac07fa, type: 3}
+  - {fileID: 2931668382051331453, guid: 66fece471a78a484fa68b22ffc70c5ae, type: 3}
+  - {fileID: -4950467421370329732, guid: 37a70b9f33756af429ad4378e876c4db, type: 3}
   monsters: []
-  currentMonster: {fileID: 0}
+  weaponPrefabs:
+  - {fileID: 4325294249150358731, guid: dba778c2c2f530843b93f6da69de1c16, type: 3}
+  - {fileID: 1083815354833108532, guid: 4e13a5e7f62290f45895a02fced7e66e, type: 3}
 --- !u!4 &1491523745
 Transform:
   m_ObjectHideFlags: 0
